@@ -3,26 +3,89 @@ import tkinter as tk
 root = tk.Tk()
 
 root.title("Atlas")
-root.geometry("900x600")
-root.configure(bg="#1e1e1e")
+root.geometry("1100x700")
+root.configure(bg="#202124")
 
-title = tk.Label(
+# ---------------- Sidebar ---------------- #
+
+sidebar = tk.Frame(
     root,
-    text="ATLAS",
-    font=("Segoe UI", 28, "bold"),
-    fg="white",
-    bg="#1e1e1e"
+    width=220,
+    bg="#2b2d31"
 )
 
-subtitle = tk.Label(
+sidebar.pack(
+    side="left",
+    fill="y"
+)
+
+buttons = [
+    "🏠 Home",
+    "💬 AI Chat",
+    "📄 PDF Tools",
+    "🐧 Linux",
+    "⚙ Settings"
+]
+
+for item in buttons:
+
+    button = tk.Button(
+        sidebar,
+        text=item,
+        bg="#2b2d31",
+        fg="white",
+        relief="flat",
+        anchor="w",
+        padx=20,
+        pady=12
+    )
+
+    button.pack(fill="x")
+
+
+# ---------------- Main Area ---------------- #
+
+content = tk.Frame(
     root,
-    text="Version 0.0.1",
-    font=("Segoe UI", 12),
-    fg="#bbbbbb",
-    bg="#1e1e1e"
+    bg="#202124"
+)
+
+content.pack(
+    fill="both",
+    expand=True
+)
+
+title = tk.Label(
+    content,
+    text="Welcome to Atlas",
+    font=("Segoe UI", 26, "bold"),
+    bg="#202124",
+    fg="white"
 )
 
 title.pack(pady=80)
+
+subtitle = tk.Label(
+    content,
+    text="Build. Automate. Create.",
+    font=("Segoe UI", 14),
+    bg="#202124",
+    fg="#cccccc"
+)
+
 subtitle.pack()
+
+status = tk.Label(
+    root,
+    text="Status: Ready",
+    bg="#1b1b1b",
+    fg="white",
+    anchor="w"
+)
+
+status.pack(
+    side="bottom",
+    fill="x"
+)
 
 root.mainloop()
