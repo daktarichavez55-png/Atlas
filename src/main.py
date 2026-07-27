@@ -1,6 +1,9 @@
 import tkinter as tk
 from ui.home import show_home
 from ui.chat import show_chat
+from ui.pdf import show_pdf
+from ui.linux import show_linux
+from ui.settings import show_settings
 # ---------------- Window ---------------- #
 
 root = tk.Tk()
@@ -40,7 +43,45 @@ chat_button = tk.Button(
 
 chat_button.pack(fill="x")
 # ---------------- Content ---------------- #
+pdf_button = tk.Button(
+    sidebar,
+    text="📄 PDF Tools",
+    bg="#2b2d31",
+    fg="white",
+    relief="flat",
+    anchor="w",
+    padx=20,
+    pady=12,
+    command=lambda: show_pdf(content)
+)
 
+pdf_button.pack(fill="x")
+linux_button = tk.Button(
+    sidebar,
+    text="🐧 Linux Tools",
+    bg="#2b2d31",
+    fg="white",
+    relief="flat",
+    anchor="w",
+    padx=20,
+    pady=12,
+    command=lambda: show_linux(content)
+)
+
+linux_button.pack(fill="x")
+settings_button = tk.Button(
+    sidebar,
+    text="⚙️ Settings",
+    bg="#2b2d31",
+    fg="white",
+    relief="flat",
+    anchor="w",
+    padx=20,
+    pady=12,
+    command=lambda: show_settings(content)
+)
+
+settings_button.pack(fill="x")
 content = tk.Frame(root, bg="#202124")
 content.pack(fill="both", expand=True)
 
