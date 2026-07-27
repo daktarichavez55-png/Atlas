@@ -42,3 +42,25 @@
 
 ### Next Goal
 Build Atlas's first interactive chat interface.
+---
+
+## Sprint 3 - Interaction
+
+**Version:** v0.0.3
+
+### Completed
+- Added the AI Chat interface.
+- Added a text input field.
+- Added a Send button.
+- Implemented the first `send_message()` function.
+- Atlas now responds to user input.
+- Added a welcome message when Atlas starts.
+
+### Lessons Learned
+- Event-driven programming.
+- Functions (`send_message()`).
+- The difference between layout and behavior.
+- Thinking about user experience (UX).
+
+### Next Goal
+Make the sidebar buttons switch between pages.
