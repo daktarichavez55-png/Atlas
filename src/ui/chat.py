@@ -16,7 +16,6 @@ def show_chat(content):
         bg="#202124",
         fg="white"
     )
-
     title.pack(pady=(30, 10))
 
     chat_output = tk.Text(
@@ -27,13 +26,18 @@ def show_chat(content):
         insertbackground="white",
         relief="flat"
     )
-
     chat_output.pack(fill="both", expand=True, padx=20)
 
-    chat_output.insert(
-        tk.END,
-        "Atlas: Welcome back!\nAtlas: How can I help you today?\n\n"
-    )
+    def show_welcome():
+        chat_output.delete("1.0", tk.END)
+        chat_output.insert(
+            tk.END,
+            "Atlas: Welcome back!\n"
+            "Atlas: How can I help you today?\n\n"
+        )
+
+    # Show the welcome message when the page opens
+    show_welcome()
 
     input_frame = tk.Frame(content, bg="#202124")
     input_frame.pack(fill="x", padx=20, pady=15)
@@ -42,14 +46,19 @@ def show_chat(content):
         input_frame,
         font=("Segoe UI", 12)
     )
-
     user_input.pack(side="left", fill="x", expand=True, padx=(0, 10))
 
     def send_message():
 
-        message = user_input.get()
+        message = user_input.get().strip()
 
-        if message.strip() == "":
+        if message == "":
+            return
+
+        # Handle the clear command
+        if message == "/clear":
+            show_welcome()
+            user_input.delete(0, tk.END)
             return
 
         # Show the user's message
@@ -61,7 +70,7 @@ def show_chat(content):
         # Ask Atlas's brain for a response
         response = get_response(message)
 
-        # Display Atlas's response
+        # Show Atlas's response
         chat_output.insert(
             tk.END,
             f"Atlas: {response}\n\n"
@@ -75,5 +84,4 @@ def show_chat(content):
         text="Send",
         command=send_message
     )
-
     send_button.pack(side="right")
