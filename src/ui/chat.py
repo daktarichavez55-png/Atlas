@@ -1,8 +1,11 @@
 import tkinter as tk
 
+from core.chat_engine import get_response
+
 
 def show_chat(content):
 
+    # Clear the current page
     for widget in content.winfo_children():
         widget.destroy()
 
@@ -49,13 +52,22 @@ def show_chat(content):
         if message.strip() == "":
             return
 
-        chat_output.insert(tk.END, f"You: {message}\n")
-
+        # Show the user's message
         chat_output.insert(
             tk.END,
-            f"Atlas: I received your message: '{message}'\n\n"
+            f"You: {message}\n"
         )
 
+        # Ask Atlas's brain for a response
+        response = get_response(message)
+
+        # Display Atlas's response
+        chat_output.insert(
+            tk.END,
+            f"Atlas: {response}\n\n"
+        )
+
+        # Clear the input box
         user_input.delete(0, tk.END)
 
     send_button = tk.Button(
