@@ -84,4 +84,9 @@ def show_chat(content):
         text="Send",
         command=send_message
     )
+
     send_button.pack(side="right")
+
+    user_input.bind("<Return>", lambda event: send_message())
+
+    user_input.focus()
