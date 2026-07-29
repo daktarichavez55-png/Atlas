@@ -44,8 +44,35 @@ def show_linux(content):
         padx=(0, 10)
     )
 
+    def search_command():
+
+        command = command_entry.get().strip().lower()
+
+        response = linux_commands.get(
+            command,
+            "Command not found."
+        )
+
+        output.delete("1.0", tk.END)
+
+        output.insert(
+            tk.END,
+            f"Command: {command}\n\n"
+             f"Description:\n{response}"
+        )
+
+        command_entry.delete(0, tk.END)
+
     search_button = tk.Button(
         input_frame,
-        text="Search"
+        text="Run",
+        command=search_command
     )
     search_button.pack(side="right")
+
+    command_entry.bind(
+        "<Return>",
+        lambda event: search_command()
+    )
+
+    command_entry.focus()
