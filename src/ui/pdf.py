@@ -1,4 +1,7 @@
 import tkinter as tk
+from tkinter import filedialog, messagebox
+
+from core.pdf_engine import merge_pdfs
 
 
 def show_pdf(content):
@@ -32,10 +35,48 @@ def show_pdf(content):
     )
     button_frame.pack(fill="x", padx=20, pady=10)
 
+    def merge_pdf_files():
+
+        pdf_files = filedialog.askopenfilenames(
+            title="Select PDF files",
+            filetypes=[("PDF Files", "*.pdf")]
+        )
+
+        if not pdf_files:
+            return
+
+        output_file = filedialog.asksaveasfilename(
+            title="Save merged PDF",
+            defaultextension=".pdf",
+            filetypes=[("PDF Files", "*.pdf")]
+        )
+
+        if not output_file:
+            return
+
+        try:
+            result = merge_pdfs(pdf_files, output_file)
+
+            output.delete("1.0", tk.END)
+            output.insert(tk.END, result)
+
+            messagebox.showinfo(
+                "Success",
+                "PDFs merged successfully!"
+            )
+
+        except Exception as error:
+
+            messagebox.showerror(
+                "Error",
+                str(error)
+            )
+
     merge_button = tk.Button(
         button_frame,
         text="Merge PDFs",
-        width=15
+        width=15,
+        command=merge_pdf_files
     )
     merge_button.pack(side="left", padx=5)
 
