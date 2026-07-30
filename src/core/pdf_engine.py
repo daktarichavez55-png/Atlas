@@ -16,3 +16,13 @@ def merge_pdfs(pdf_list, output_file):
         writer.write(output)
 
     return "PDFs merged successfully."
+
+
+def get_pdf_info(pdf_file):
+
+    reader = PdfReader(pdf_file)
+
+    return {
+        "pages": len(reader.pages),
+        "encrypted": reader.is_encrypted
+    }

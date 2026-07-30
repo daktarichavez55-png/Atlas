@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import filedialog, messagebox
 
-from core.pdf_engine import merge_pdfs
+from core.pdf_engine import merge_pdfs, get_pdf_info
 
 
 def show_pdf(content):
@@ -66,7 +66,33 @@ def show_pdf(content):
             )
 
         except Exception as error:
+            messagebox.showerror(
+                "Error",
+                str(error)
+            )
 
+    def show_pdf_info():
+
+        pdf_file = filedialog.askopenfilename(
+            title="Select PDF",
+            filetypes=[("PDF Files", "*.pdf")]
+        )
+
+        if not pdf_file:
+            return
+
+        try:
+            info = get_pdf_info(pdf_file)
+
+            output.delete("1.0", tk.END)
+            output.insert(
+                tk.END,
+                f"File: {pdf_file}\n\n"
+                f"Pages: {info['pages']}\n"
+                f"Encrypted: {info['encrypted']}"
+            )
+
+        except Exception as error:
             messagebox.showerror(
                 "Error",
                 str(error)
@@ -86,6 +112,14 @@ def show_pdf(content):
         width=15
     )
     split_button.pack(side="left", padx=5)
+
+    info_button = tk.Button(
+        button_frame,
+        text="PDF Info",
+        width=15,
+        command=show_pdf_info
+    )
+    info_button.pack(side="left", padx=5)
 
     compress_button = tk.Button(
         button_frame,
