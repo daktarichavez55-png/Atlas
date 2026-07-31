@@ -1,3 +1,4 @@
+import os
 import tkinter as tk
 from tkinter import (
     filedialog,
@@ -33,7 +34,8 @@ def show_pdf(content):
         bg="#2b2d31",
         fg="white",
         insertbackground="white",
-        relief="flat"
+        relief="flat",
+        font=("Consolas", 11)
     )
     output.pack(fill="both", expand=True, padx=20, pady=10)
 
@@ -42,6 +44,9 @@ def show_pdf(content):
         bg="#202124"
     )
     button_frame.pack(fill="x", padx=20, pady=10)
+
+    def clear_output():
+        output.delete("1.0", tk.END)
 
     # ---------------- Merge PDFs ---------------- #
 
@@ -68,16 +73,20 @@ def show_pdf(content):
             result = merge_pdfs(pdf_files, output_file)
 
             output.delete("1.0", tk.END)
-            output.insert(tk.END, result)
+            output.insert(
+                tk.END,
+                f"✓ {result}\n\n"
+                f"Saved as:\n{output_file}"
+            )
 
             messagebox.showinfo(
-                "Success",
+                "Merge Complete",
                 result
             )
 
         except Exception as error:
             messagebox.showerror(
-                "Error",
+                "Merge Error",
                 str(error)
             )
 
@@ -100,14 +109,17 @@ def show_pdf(content):
 
             output.insert(
                 tk.END,
-                f"File: {pdf_file}\n\n"
-                f"Pages: {info['pages']}\n"
-                f"Encrypted: {info['encrypted']}"
+                "==============================\n"
+                "       PDF INFORMATION\n"
+                "==============================\n\n"
+                f"File:\n{os.path.basename(pdf_file)}\n\n"
+                f"Pages:\n{info['pages']}\n\n"
+                f"Encrypted:\n{'Yes' if info['encrypted'] else 'No'}"
             )
 
         except Exception as error:
             messagebox.showerror(
-                "Error",
+                "PDF Error",
                 str(error)
             )
 
@@ -149,6 +161,7 @@ def show_pdf(content):
             return
 
         try:
+
             result = split_pdf(
                 pdf_file,
                 output_file,
@@ -157,16 +170,20 @@ def show_pdf(content):
             )
 
             output.delete("1.0", tk.END)
-            output.insert(tk.END, result)
+            output.insert(
+                tk.END,
+                f"✓ {result}\n\n"
+                f"Saved as:\n{output_file}"
+            )
 
             messagebox.showinfo(
-                "Success",
+                "Split Complete",
                 result
             )
 
         except Exception as error:
             messagebox.showerror(
-                "Error",
+                "Split Error",
                 str(error)
             )
 
@@ -175,30 +192,39 @@ def show_pdf(content):
     merge_button = tk.Button(
         button_frame,
         text="Merge PDFs",
-        width=15,
+        width=14,
         command=merge_pdf_files
     )
-    merge_button.pack(side="left", padx=5)
+    merge_button.pack(side="left", padx=4)
 
     split_button = tk.Button(
         button_frame,
         text="Split PDF",
-        width=15,
+        width=14,
         command=split_pdf_file
     )
-    split_button.pack(side="left", padx=5)
+    split_button.pack(side="left", padx=4)
 
     info_button = tk.Button(
         button_frame,
         text="PDF Info",
-        width=15,
+        width=14,
         command=show_pdf_info
     )
-    info_button.pack(side="left", padx=5)
+    info_button.pack(side="left", padx=4)
+
+    clear_button = tk.Button(
+        button_frame,
+        text="Clear",
+        width=14,
+        command=clear_output
+    )
+    clear_button.pack(side="left", padx=4)
 
     compress_button = tk.Button(
         button_frame,
         text="Compress",
-        width=15
+        width=14,
+        state="disabled"
     )
-    compress_button.pack(side="left", padx=5)
+    compress_button.pack(side="left", padx=4)
