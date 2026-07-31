@@ -26,3 +26,24 @@ def get_pdf_info(pdf_file):
         "pages": len(reader.pages),
         "encrypted": reader.is_encrypted
     }
+
+
+def split_pdf(input_file, output_file, start_page, end_page):
+
+    reader = PdfReader(input_file)
+    writer = PdfWriter()
+
+    total_pages = len(reader.pages)
+
+    if start_page < 1 or end_page > total_pages or start_page > end_page:
+        raise ValueError(
+            f"Please choose pages between 1 and {total_pages}."
+        )
+
+    for page_number in range(start_page - 1, end_page):
+        writer.add_page(reader.pages[page_number])
+
+    with open(output_file, "wb") as output:
+        writer.write(output)
+
+    return "PDF split successfully."
